@@ -10,6 +10,9 @@
       <link rel="shortcut icon" type="image/jpg" href="logo.png"/>
       <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
       <link href="https://fonts.googleapis.com/css2?family=Oswald&display=swap" rel="stylesheet">
+      
+      <script src="uv/uv.bundle.js" charset="UTF-8"></script>
+      <script src="uv/uv.config.js" charset="UTF-8"></script>
    </head>
    <body>
       <canvas id="canvas"></canvas>
@@ -36,21 +39,19 @@
           </div>
       </div>
 
-      <script src="uv/uv.bundle.js" charset="UTF-8" defer></script>
-      <script src="uv/uv.config.js" charset="UTF-8" defer></script>
-      
       <script>
         window.addEventListener('load', async () => {
             if ('serviceWorker' in navigator) {
                 try {
-                    // This points specifically to your /active/uv/ folder
+                    // This registers the script from the /active/uv/ folder
+                    // It uses the scope /active/go/ which is the virtual proxy path
                     await navigator.serviceWorker.register('./uv/uv.sw.js', {
                         scope: '/active/go/' 
                     });
-                    console.log("Business Proxy: Service Worker Registered");
+                    console.log("Proxy Engine: Service Worker Registered Successfully");
                 } catch (err) {
-                    console.error("Business Proxy: Registration Failed", err);
-                    document.getElementById('uv-error').innerText = "Engine Error: Check paths.";
+                    console.error("Proxy Engine: Registration Failed!", err);
+                    document.getElementById('uv-error').innerText = "Engine Error: Could not find uv.sw.js in the uv folder.";
                 }
             }
         });
